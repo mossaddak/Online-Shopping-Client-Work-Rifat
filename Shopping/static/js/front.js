@@ -35,8 +35,6 @@ $(function () {
         // Get class
         var total_item_price_class = '.total_item_price' + response.id
 
-        console.log("class===========================>", total_item_price_class)
-
         // Set total item price 
         $(total_item_price_class).text("Tk" + response.total_price);
 
@@ -57,13 +55,11 @@ $(function () {
             type: 'GET',
             success: function (response) {
                 if (response.status === "success") {
-                    console.log("Response=================", response.id);
+                    console.log("Response=================", response);
                     cartPricing(response);
+                } else {
+                    console.error("Error decrementing product quantity:", response);
                 }
-                if (typeof callback === 'function') {
-                    callback(response);
-                }
-                return response;
             }
         });
     }
@@ -80,18 +76,17 @@ $(function () {
                 } else {
                     console.error("Error decrementing product quantity:", response);
                 }
-                return response;
             }
         });
     }
 
     // Decreament
-    $(document).on('click', '.dec-btn', function (e, response) {
+    $(document).on('click', '.dec-btn', function (e) {
         e.preventDefault();
 
         var siblings = $(this).siblings('input');
 
-        if (parseInt(siblings.val()) === 1) {
+        if (parseInt(siblings.val(), 10) === 1) {
             // Show the confirmation dialog
             var confirmation = confirm('Are you sure you want to delete this item?');
             if (confirmation) {
@@ -101,6 +96,9 @@ $(function () {
                 // Replace with the new button HTML
                 var newButton = '<a class="dec-btn p-0 ml-2" onclick="return confirm(\'Are you sure you want to delete this item?\')" href="{% url \'store:minus-cart\' cart_product.id %}"><i class="fas fa-minus"></i></a>';
                 $(this).after(newButton);
+
+                
+
 
                 // $(".cart_section").hide("slow");
                 // $(".cart_empty_section").show("slow");
@@ -112,16 +110,28 @@ $(function () {
                 var cart_product_class = ".cart_product" + cartId
 
                 // Delete the cart item
-                $(cart_product_class).hide("slow");
-
+                $(cart_product_class).hide("slow", function() {
+                    $(this).remove();
+                });
+                
                 // Minus cart item qty
                 minusCart(cartId, 'minus');
+
+                // Total cart item count
+                var cartCount = $(".cart_count").length-1
+                if(cartCount===0){
+                    $(".cart_section").hide("slow");
+                    $(".cart_empty_section").show("slow");
+                }
+                
+
+                console.log("Cart item=======================>",$(".cart_count").length-1);
             }
         } else if (parseInt(siblings.val(), 10) > 1) {
             siblings.val(parseInt(siblings.val(), 10) - 1);
             // Get cart id
             var cartId = $(this).data('cart-id');
-
+            console.log("Cart item=======================>",$(".cart_count").length-1);
             // Minus cart item qty
             minusCart(cartId, 'minus');
         }
