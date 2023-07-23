@@ -44,8 +44,6 @@ $(function () {
         // Set shipping charge with overall cart item price
         $(".total_price_with_shipping").text("Tk" + (parseFloat(overall_product_price_of_cart) + 10.00).toFixed(2));
 
-        // Set count of cart in navbar
-
     }
 
     // Decreament the cart item qty from database
