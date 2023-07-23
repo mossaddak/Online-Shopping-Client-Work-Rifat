@@ -102,22 +102,22 @@ $(function () {
                 var cart_product_class = ".cart_product" + cartId
 
                 // Delete the cart item
-                $(cart_product_class).hide("slow", function() {
+                $(cart_product_class).hide("slow", function () {
                     $(this).remove();
                 });
-                
+
                 // Minus cart item qty
                 minusCart(cartId, 'minus');
 
                 // Total cart item count
-                var cartCount = $(".cart_count").length-1
-                if(cartCount===0){
+                var cartCount = $(".cart_count").length - 1
+                if (cartCount === 0) {
                     $(".cart_section").hide("slow");
                     $(".cart_empty_section").show("slow");
                 };
 
                 // Set cart count in navbar
-                $(".cart_of_user").text("("+cartCount+")");
+                $(".cart_of_user").text("(" + cartCount + ")");
             }
         } else if (parseInt(siblings.val(), 10) > 1) {
             siblings.val(parseInt(siblings.val(), 10) - 1);
