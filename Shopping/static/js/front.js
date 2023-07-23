@@ -97,12 +97,6 @@ $(function () {
                 var newButton = '<a class="dec-btn p-0 ml-2" onclick="return confirm(\'Are you sure you want to delete this item?\')" href="{% url \'store:minus-cart\' cart_product.id %}"><i class="fas fa-minus"></i></a>';
                 $(this).after(newButton);
 
-                
-
-
-                // $(".cart_section").hide("slow");
-                // $(".cart_empty_section").show("slow");
-
                 // Get cart id
                 var cartId = $(this).data('cart-id');
 
