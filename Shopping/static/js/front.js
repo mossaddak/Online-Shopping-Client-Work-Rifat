@@ -55,7 +55,6 @@ $(function () {
             type: 'GET',
             success: function (response) {
                 if (response.status === "success") {
-                    console.log("Response=================", response);
                     cartPricing(response);
                 } else {
                     console.error("Error decrementing product quantity:", response);
@@ -71,7 +70,6 @@ $(function () {
             type: 'GET',
             success: function (response) {
                 if (response.status === "success") {
-                    console.log("Response=================", response);
                     cartPricing(response)
                 } else {
                     console.error("Error decrementing product quantity:", response);
@@ -116,16 +114,16 @@ $(function () {
                 if(cartCount===0){
                     $(".cart_section").hide("slow");
                     $(".cart_empty_section").show("slow");
-                }
-                
+                };
 
-                console.log("Cart item=======================>",$(".cart_count").length-1);
+                // Set cart count in navbar
+                $(".cart_of_user").text("("+cartCount+")");
             }
         } else if (parseInt(siblings.val(), 10) > 1) {
             siblings.val(parseInt(siblings.val(), 10) - 1);
             // Get cart id
             var cartId = $(this).data('cart-id');
-            console.log("Cart item=======================>",$(".cart_count").length-1);
+
             // Minus cart item qty
             minusCart(cartId, 'minus');
         }
